@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum UserRole {
+  EMPLOYEE
+  MANAGER
+}
+
+enum Category {
+  FOOD
+  OTHERS
+  SERVICES
+  TRANSPORT
+  ACCOMMODATION
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  role    UserRole  @default(EMPLOYEE)
+  refunds Refunds[]
+
+  @@map("users")
+}
+
+model Refunds {
+  id        String   @id @default(uuid())
+  name      String
+  amount    Float
+  category  Category
+  filename  String
+  userId    String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  User User @relation(fields: [userId], references: [id])
+
+  @@map("refunds")
+}
