@@ -1,7 +1,8 @@
 import express from "express";
 import { Request, Response, NextFunction } from "express";
 import cors from "cors";
-import { errorHandling } from "./middlewares/error-handling";
+import { errorHandling } from "./middlewares/error-handling.js";
+import { routes } from "./routes/index.js";
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.get("/alive", (req: Request, res: Response, next: NextFunction) => {
     upTime: process.uptime(),
   });
 });
+
+app.use(routes);
 
 app.use(errorHandling);
 
