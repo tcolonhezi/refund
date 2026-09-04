@@ -4,6 +4,7 @@ import z from "zod";
 import { UserCreateInput } from "@/generated/prisma/models.js";
 import { prisma } from "@/database/prisma.js";
 import { hash } from "bcrypt";
+import { AppError } from "@/utils/AppError.js";
 class UserController {
   async createUser(request: Request, response: Response, next: NextFunction) {
     try {
@@ -27,9 +28,7 @@ class UserController {
       });
 
       if (hasUserWithEmail) {
-        return response
-          .status(400)
-          .json({ error: "User with this email already exists" });
+        return new AppError("Email already exists", 409);
       }
 
       const passwordHashed = await hash(password, 10);
@@ -49,7 +48,7 @@ class UserController {
 
       return response.json(userWithoutPassword);
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 }
