@@ -10,5 +10,16 @@ refundsRouter.post(
   verifyUserAuthorization(["EMPLOYEE"]),
   refundsController.create,
 );
+refundsRouter.get(
+  "/",
+  verifyUserAuthorization(["MANAGER", "EMPLOYEE"]),
+  refundsController.list,
+);
+
+refundsRouter.get(
+  "/:id",
+  verifyUserAuthorization(["MANAGER", "EMPLOYEE"]),
+  refundsController.show,
+);
 
 export { refundsRouter };

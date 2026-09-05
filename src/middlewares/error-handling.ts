@@ -21,6 +21,12 @@ export const errorHandling: ErrorRequestHandler = (
     });
   }
 
+  if (error instanceof SyntaxError && "body" in error) {
+    return response.status(400).json({
+      message: "Invalid JSON",
+    });
+  }
+
   console.error(error);
 
   return response.status(500).json({
