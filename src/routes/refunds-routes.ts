@@ -2,24 +2,24 @@ import { RefundsController } from "@/controllers/refunds-controller.js";
 import { verifyUserAuthorization } from "@/middlewares/verify-user-authorization.js";
 import { Router } from "express";
 
-const refundsRouter = Router();
+const refundsRoutes = Router();
 const refundsController = new RefundsController();
 
-refundsRouter.post(
+refundsRoutes.post(
   "/",
   verifyUserAuthorization(["EMPLOYEE"]),
   refundsController.create,
 );
-refundsRouter.get(
+refundsRoutes.get(
   "/",
   verifyUserAuthorization(["MANAGER", "EMPLOYEE"]),
   refundsController.list,
 );
 
-refundsRouter.get(
+refundsRoutes.get(
   "/:id",
   verifyUserAuthorization(["MANAGER", "EMPLOYEE"]),
   refundsController.show,
 );
 
-export { refundsRouter };
+export { refundsRoutes };

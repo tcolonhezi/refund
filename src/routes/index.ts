@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { usersRoutes } from "./users-routes.js";
 import { sessionsRoutes } from "./sessions-routes.js";
-import { refundsRouter } from "./refunds-routes.js";
+import { refundsRoutes } from "./refunds-routes.js";
 import { ensureAuthenticated } from "@/middlewares/ensure-authenticated.js";
+import { uploadsRoutes } from "./upload-routes.js";
 
 const routes = Router();
 
@@ -12,6 +13,7 @@ routes.use("/sessions", sessionsRoutes);
 
 //Rotas Privadas
 routes.use(ensureAuthenticated);
-routes.use("/refunds", refundsRouter);
+routes.use("/refunds", refundsRoutes);
 
+routes.use("/uploads", uploadsRoutes);
 export { routes };

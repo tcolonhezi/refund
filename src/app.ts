@@ -3,6 +3,9 @@ import { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import { errorHandling } from "./middlewares/error-handling.js";
 import { routes } from "./routes/index.js";
+import { ensureAuthenticated } from "./middlewares/ensure-authenticated.js";
+import { verifyUserAuthorization } from "./middlewares/verify-user-authorization.js";
+import upload from "./configs/upload.js";
 
 const app = express();
 
