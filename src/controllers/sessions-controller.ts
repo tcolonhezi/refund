@@ -41,6 +41,9 @@ class SessionsController {
 
       return response.json({ token, user: userWithoutPassword });
     } catch (error) {
+      if (error instanceof z.ZodError) {
+        return next(error);
+      }
       return next(new AppError("Error creating session", 500));
     }
   }

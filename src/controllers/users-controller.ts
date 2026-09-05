@@ -12,7 +12,7 @@ class UserController {
         name: z
           .string()
           .min(3, { message: "Name must be at least 3 characters long" }),
-        email: z.email({ message: "Invalid email address" }),
+        email: z.email({ message: "Invalid email address" }).toLowerCase(),
         password: z
           .string()
           .min(6, { message: "Password must be at least 6 characters long" }),
@@ -48,6 +48,9 @@ class UserController {
 
       return response.json(userWithoutPassword);
     } catch (error) {
+      if (error instanceof z.ZodError) {
+        return next(error);
+      }
       return next(error);
     }
   }
