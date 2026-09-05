@@ -28,7 +28,7 @@ class UserController {
       });
 
       if (hasUserWithEmail) {
-        return new AppError("Email already exists", 409);
+        return next(new AppError("Email already exists", 409));
       }
 
       const passwordHashed = await hash(password, 10);
