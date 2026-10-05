@@ -58,9 +58,12 @@ class UploadsController {
       });
       const { filename } = paramsSchema.parse(request.params);
       const refund = await prisma.refunds.findFirst({
-        where: { filename: filename },
+        where: {
+          filename: {
+            contains: filename,
+          },
+        },
       });
-
       if (!refund) return next(new AppError("File not found", 404));
 
       if (
